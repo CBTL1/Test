@@ -15,6 +15,7 @@
       margin-bottom: 1.5rem;
     }
     .chart-card canvas { max-width: 100%; }
+    .chart-wrap { position: relative; }
     .figure-caption {
       font-size: 0.8125rem;
       color: var(--muted-foreground);
@@ -199,7 +200,9 @@
     <div class="section-title" id="figures">Agreement Figures</div>
 
     <div class="chart-card">
-      <canvas id="fleissChart" height="260"></canvas>
+      <div class="chart-wrap" style="height:300px">
+        <canvas id="fleissChart"></canvas>
+      </div>
       <div class="figure-caption">
         <strong>Figure&nbsp;1.</strong> Fleiss&rsquo; &kappa; for the eight research questions
         (n&nbsp;=&nbsp;321, k&nbsp;=&nbsp;5 rounds). Dashed lines mark the Landis&nbsp;&amp;&nbsp;Koch thresholds.
@@ -207,7 +210,9 @@
     </div>
 
     <div class="chart-card">
-      <canvas id="agreeChart" height="120"></canvas>
+      <div class="chart-wrap" style="height:100px">
+        <canvas id="agreeChart"></canvas>
+      </div>
       <div class="figure-caption">
         <strong>Figure&nbsp;2.</strong> Distribution of all 3,210 pairwise screening comparisons.
         86.3% same decision; among 439 disagreements, nearly all involve the Maybe category.
