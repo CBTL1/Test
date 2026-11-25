@@ -3,26 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello World</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #0f172a;
-      color: #f8fafc;
-    }
-    h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-  </style>
+  <title>CBTL1</title>
+  <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
-  <h1>Hello World</h1>
+  <nav class="nav">
+    <a class="nav-brand" href="./">CBTL1</a>
+    <ul class="nav-links">
+      <li><a href="./">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1>Hello World</h1>
+    <p>A test site for deploying projects, showcases and experiments via GitHub Pages.</p>
+  </div>
+
+  <div class="container" id="projects">
+    <h2 style="margin-bottom: 1.5rem;">Projects</h2>
+    <div class="card-grid">
+      <a class="card" href="./projects/demo/" style="text-decoration: none; color: inherit;">
+        <h3>Demo Project</h3>
+        <p>A sample showcase to test the deployment pipeline.</p>
+        <div class="badges">
+          <span class="badge">HTML</span>
+          <span class="badge">CSS</span>
+          <span class="badge">GitHub Pages</span>
+        </div>
+      </a>
+    </div>
+  </div>
 </body>
 </html>
