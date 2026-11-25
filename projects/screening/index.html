@@ -55,24 +55,62 @@
     .heatmap td:hover { transform: scale(1.08); z-index: 1; }
     .heatmap td.diag { background: var(--muted); color: var(--muted-foreground); }
     .heatmap .row-label { text-align: right; font-weight: 400; border: none; color: var(--muted-foreground); }
-    .doc-card {
+    details.doc {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.25rem;
       margin-bottom: 0.75rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
       font-size: 0.875rem;
       font-weight: 300;
       line-height: 1.6;
       transition: border-color 0.2s;
     }
-    .doc-card:hover { border-color: var(--brand-red); }
-    .doc-icon { flex-shrink: 0; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background: var(--muted); border-radius: var(--radius); font-size: 1rem; }
-    .doc-card h3 { font-size: 0.875rem; margin-bottom: 0.125rem; }
-    .doc-card p { font-size: 0.8125rem; color: var(--muted-foreground); margin: 0; }
+    details.doc[open] { border-color: var(--brand-red, #c8102e); }
+    details.doc summary {
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 400;
+      user-select: none;
+    }
+    details.doc summary::-webkit-details-marker { display: none; }
+    details.doc summary::before {
+      content: "\25B6"; font-size: 0.6rem; color: var(--muted-foreground);
+      transition: transform 0.15s;
+    }
+    details.doc[open] summary::before { transform: rotate(90deg); }
+    details.doc .doc-body {
+      padding: 0 1.25rem 1.25rem;
+      font-size: 0.8125rem;
+      color: var(--muted-foreground);
+    }
+    details.doc .doc-body p { margin: 0 0 0.75rem; }
+    details.doc .doc-body p:last-child { margin-bottom: 0; }
+    details.doc .doc-body code {
+      font-size: 0.75rem; background: var(--muted); padding: 0.15rem 0.35rem;
+      border-radius: 3px;
+    }
+    details.doc .doc-body pre {
+      background: var(--muted); border-radius: var(--radius);
+      padding: 1rem; overflow-x: auto; font-size: 0.75rem; line-height: 1.6;
+      white-space: pre-wrap; word-break: break-word; margin: 0.75rem 0;
+    }
+    details.doc .doc-body a { color: var(--brand-red, #c8102e); }
+    details.doc .doc-body ol, details.doc .doc-body ul {
+      margin: 0.5rem 0 0.75rem 1.25rem; font-size: 0.8125rem;
+    }
+    details.doc .doc-body li { margin-bottom: 0.35rem; }
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.35rem 0.75rem; border: 1px solid var(--border);
+      border-radius: var(--radius); font-size: 0.75rem; font-weight: 500;
+      color: var(--foreground); background: var(--muted); text-decoration: none;
+      transition: border-color 0.15s;
+    }
+    .dl-btn:hover { border-color: var(--brand-red, #c8102e); }
 
     /* ── Source table with rating columns ─────────────────────────── */
     .source-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; font-weight: 300; }
@@ -247,33 +285,99 @@
     <!-- ══════ Documentation ══════ -->
     <div class="section-title" id="docs">Documentation</div>
 
-    <a class="doc-card" href="./rating-instructions.md" style="text-decoration:none; color:inherit;">
-      <div class="doc-icon">&#128196;</div>
-      <div>
-        <h3>Screening Prompt</h3>
-        <p>The full rating instructions given to each AI screening agent, including the eight research
-           questions, the rating scale, and the Include/Maybe/Exclude criteria.</p>
+    <details class="doc">
+      <summary>Scopus Search String</summary>
+      <div class="doc-body">
+        <p>Executed on <strong>24&nbsp;November&nbsp;2026</strong> in Scopus. Returned <strong>321&nbsp;records</strong> after deduplication and document-type/language limits.</p>
+<pre>TITLE-ABS-KEY (
+  ( "virtual commission*" OR "virtual start-up" OR "virtual startup"
+    OR "virtual ramp-up" OR "virtual factory acceptance test*" OR "virtual FAT"
+    OR "simulation-based commissioning" OR "emulation-based testing"
+    OR ( "digital twin*" W/5 commission* ) )
+  AND
+  ( ( "commissioning time" OR "ramp-up time" OR "time to market"
+      OR "time-to-market" OR "lead time" OR "time saving*" OR "time reduction"
+      OR "model* effort" OR "cost-benefit" OR "cost benefit" OR economic*
+      OR "return on investment" OR benefit* OR "factory acceptance test*"
+      OR "site acceptance test*" )
+    OR
+    ( fault* OR failure* OR error* OR defect* OR disturbance* OR abnormal*
+      OR "fault injection" OR reliab* OR robust* OR "test case*"
+      OR "test scenario*" )
+    OR
+    ( fidelity OR "model validity" OR "model validation" OR "model accuracy"
+      OR "simulation accuracy" OR "level of detail" OR "level of abstraction"
+      OR "model adequacy" OR "reality gap" OR "sim-to-real"
+      OR "virtual-to-physical" OR "verification and validation" OR realism
+      OR credib* ) )
+)
+AND PUBYEAR &gt; 2009
+AND ( LIMIT-TO ( DOCTYPE , "ar" ) OR LIMIT-TO ( DOCTYPE , "cp" )
+      OR LIMIT-TO ( DOCTYPE , "re" ) )
+AND ( LIMIT-TO ( LANGUAGE , "English" ) )</pre>
+        <p>Document types limited to articles (<code>ar</code>), conference papers (<code>cp</code>) and reviews (<code>re</code>). Language limited to English.</p>
       </div>
-    </a>
+    </details>
 
-    <div class="doc-card" style="cursor:default;">
-      <div class="doc-icon">&#9881;</div>
-      <div>
-        <h3>How the Screening Was Run</h3>
-        <p>321 Scopus records split into 4 batches. Five independent rounds, each running four parallel
-           AI agents (Claude) with identical instructions but no shared context. 20 JSON files validated,
-           merged into Excel workbooks and analysed with Python (statsmodels, scipy).</p>
+    <details class="doc">
+      <summary>Source Data (CSV)</summary>
+      <div class="doc-body">
+        <p>The Scopus export used as input for all screening rounds. 321&nbsp;records with columns: Authors, Title, Year, Source title, DOI, Document Type, Abstract, Author Keywords, and others.</p>
+        <a class="dl-btn" href="./DatasetOfFiles.csv" download>&#11015; DatasetOfFiles.csv</a>
       </div>
-    </div>
+    </details>
 
-    <div class="doc-card" style="cursor:default;">
-      <div class="doc-icon">&#128202;</div>
-      <div>
-        <h3>How This Page Was Generated</h3>
-        <p>Source list from Scopus CSV (DatasetOfFiles.csv). Charts: Chart.js&nbsp;4.4. Rating columns
-           merged from the 20 round JSON files. Page emitted by a Python build script.</p>
+    <details class="doc">
+      <summary>Screening Prompt</summary>
+      <div class="doc-body">
+        <p>The exact instructions given to each AI screening agent (Claude). Defines eight research questions (rq1&ndash;rq3, t1, t3&ndash;t6), the four-level rating scale (Yes / Partly / Mentions / empty), the Include/Maybe/Exclude criteria, and the output JSON format.</p>
+        <a class="dl-btn" href="./rating-instructions.md" target="_blank">&#128196; rating-instructions.md</a>
       </div>
-    </div>
+    </details>
+
+    <details class="doc">
+      <summary>How the Screening Was Run</summary>
+      <div class="doc-body">
+        <p>Five independent screening rounds, each with identical instructions but no shared context, were run by an AI rater (Claude). Each round processed all 321&nbsp;records in four batches (81&nbsp;+&nbsp;81&nbsp;+&nbsp;81&nbsp;+&nbsp;78), yielding 20&nbsp;JSON files.</p>
+        <ol>
+          <li>Export records from Scopus as CSV using the search string above.</li>
+          <li>Split the 321 records into 4 batches of roughly equal size.</li>
+          <li>For each of the 5 rounds: start a fresh Claude session (no memory of prior rounds), provide the screening prompt and one batch at a time, collect the JSON output.</li>
+          <li>Validate each JSON: correct record count, valid screen values (Include/Maybe/Exclude), all 8 rating fields present.</li>
+        </ol>
+        <p><strong>Per-round screening totals:</strong></p>
+        <ul>
+          <li>R1: 200 Include, 57 Maybe, 64 Exclude</li>
+          <li>R2: 189 Include, 62 Maybe, 70 Exclude</li>
+          <li>R3: 196 Include, 57 Maybe, 68 Exclude</li>
+          <li>R4: 184 Include, 72 Maybe, 65 Exclude</li>
+          <li>R5: 183 Include, 69 Maybe, 69 Exclude</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary>How to Reproduce</summary>
+      <div class="doc-body">
+        <p>To reproduce the screening from scratch:</p>
+        <ol>
+          <li><strong>Search Scopus</strong> using the search string above. The result set may differ if the database has been updated since 24&nbsp;November&nbsp;2026.</li>
+          <li><strong>Export</strong> all records as CSV with all available fields. The file should be UTF-8 with BOM (<code>utf-8-sig</code>).</li>
+          <li><strong>Assign IDs</strong> S001&ndash;S<em>N</em> in row order.</li>
+          <li><strong>Split</strong> into 4 batches (roughly equal). We used 81&nbsp;+&nbsp;81&nbsp;+&nbsp;81&nbsp;+&nbsp;78.</li>
+          <li><strong>Run 5 independent rounds.</strong> For each round, start a fresh Claude session and provide the <a href="./rating-instructions.md">screening prompt</a>. Feed each batch as a separate message. Collect the JSON output for each batch.</li>
+          <li><strong>Analyse agreement.</strong> Compute Fleiss&rsquo;&nbsp;&kappa; across the 5 rounds for each research question and the screening decision. Compute pairwise Cohen&rsquo;s&nbsp;&kappa; and exact agreement. Run Cochran&rsquo;s&nbsp;Q on the Include/not-Include binary and the Friedman test on the ordinal ratings.</li>
+        </ol>
+        <p>Alternatively, download the <a href="./DatasetOfFiles.csv" download>CSV</a> and start from step&nbsp;3 to reproduce with the same input data.</p>
+      </div>
+    </details>
+
+    <details class="doc">
+      <summary>How This Page Was Generated</summary>
+      <div class="doc-body">
+        <p>Source list from the Scopus CSV. Interactive charts built with Chart.js&nbsp;4.4.1. Screening decisions merged from the 20&nbsp;round JSON files (5&nbsp;rounds&nbsp;&times;&nbsp;4&nbsp;batches) into the dice-dot column. The HTML was emitted by a Python build script that reads the CSV and all JSON files, then writes this page.</p>
+      </div>
+    </details>
 
     <!-- ══════ Sources ══════ -->
     <div class="section-title" id="sources">Source List (321 records)</div>
